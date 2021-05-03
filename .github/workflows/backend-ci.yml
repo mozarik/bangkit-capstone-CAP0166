@@ -43,7 +43,7 @@ jobs:
   test:
     needs: build
     
-    runs-on: ubuntu-latests
+    runs-on: ubuntu-latest
     
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
