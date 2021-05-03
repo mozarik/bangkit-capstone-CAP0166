@@ -7,9 +7,10 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
+    paths : [back-end]
   pull_request:
     branches: [ main ]
-
+    paths : [back-end]
 defaults:
   run:
     working-directory: back-end
@@ -36,3 +37,21 @@ jobs:
           echo test, and deploy your project.
           ls -la
           cat README.md
+        
+  test:
+    needs: build
+    
+    runs-on: ubuntu-latests
+    
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+
+      # Runs a set of commands using the runners shell
+      - name: Run a The Second Step of the 
+        run: |
+          echo This is Test Jobs
+
+    
