@@ -1,0 +1,26 @@
+Anaconda download: https://www.anaconda.com/products/individual
+Github Labelling: https://github.com/tzutalin/labelImg
+Download folder Image di link berikut: https://drive.google.com/drive/folders/1VXojY0C1D-5tgnt32z9GbPpNFDGasZYv?usp=sharing
+
+(Ingat ya, picture dimulai dari Picture 61, berarti kalau 150 per orang, satu orang kerjain dari Picture61-Picture210, 
+satunya lagi kerjain Picture211-Picture360)
+
+Instruksi:
+1. Download & Install Anaconda
+2. Create and activate new environment in Anaconda
+3. Tetap pada path direktori yang sama, Jalankan pada anaconda: conda install pyqt=5
+4. Jalankan pada anaconda: conda install -c anaconda lxml
+5. Masuk ke path direktori folder github pada link di atas.
+6. Jalankan pada anaconda: pyrcc5 -o libs/resources.py resources.qrc
+7. Jalankan pada anaconda: python labelImg.py [IMAGE_PATH (folder image)] [PRE-DEFINED CLASS FILE (Label.txt)]
+8. Akan muncul windows app, pastikan pada view check auto save dan direktorinya sama pada direktori folder image
+9. Mulai labelling, pastikan yang dikotakin seluruh fitur pada wajah kena. Setelah selesai semua label, lanjut ke picture berikutnya
+10. Ulangi instruksi nomor 9 sampai 150 picture sudah di label.
+
+Jika masih bingung, lihat Penjelasan.mp4
+
+11. Setelah selesai upload foldernya dalam bentuk zip ke github.
+(Nah, biar hemat memori github, yang ngehandle Picture61-Picture210, JANGAN LUPA HAPUS file foto yang tidak dihandle 
+(berarti dari Picture211-selesai), 
+Begitupun yang ngehandle Picture211-360, hapus file foto Picture61-Picture210, Picture361-selesai) sebelum di zip :).
+ 
