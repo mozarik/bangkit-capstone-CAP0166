@@ -19,7 +19,7 @@ Instruksi:
 
 Jika masih bingung, lihat Penjelasan.mp4
 
-11. Setelah selesai upload foldernya dalam bentuk zip ke github.
+11. Setelah selesai upload foldernya dalam bentuk zip ke github branch refrences di folder Dataset Label yaa.
 (Nah, biar hemat memori github, yang ngehandle Picture61-Picture210, JANGAN LUPA HAPUS file foto yang tidak dihandle 
 (berarti dari Picture211-selesai), 
 Begitupun yang ngehandle Picture211-360, hapus file foto Picture61-Picture210, Picture361-selesai) sebelum di zip :).
