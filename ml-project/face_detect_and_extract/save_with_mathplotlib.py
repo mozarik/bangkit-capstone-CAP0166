@@ -16,9 +16,12 @@ def detect_faces(image_path):
     image = Image.fromarray(image)
     faces = mtcnn(image)
     count = 0
-    for face in faces:
+    fig, axes = plt.subplots(1, len(faces))
+    for face, ax in zip(faces, axes):
         face = face.permute(1, 2, 0).int().numpy()
-        cv2.imwrite(os.path.join(path_folder, "face"+str(count)+".jpg"),face)
+        ax.imshow(face)
+        ax.axis('off')
+        plt.savefig(os.path.join(path_folder, "face"+str(count)+".png"))
         count = count + 1
 
 
