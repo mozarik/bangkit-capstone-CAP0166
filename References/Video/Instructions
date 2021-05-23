@@ -1,0 +1,7 @@
+Please watch these videos to get refrences for what you are about to make. Watch accordingly from 1.webm - 16.webm. Remember the goal for the app is to make an application
+for face activity detection (Distraction or not).
+
+You can see this github for your codes references: https://github.com/tensorflow/examples/tree/master/lite/examples/object_detection/android
+
+Later, zein will push the tflite model.
+If there are still many confusion, ask us in Whatsapp or make an issue on github about it.
