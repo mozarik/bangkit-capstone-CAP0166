@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Watcher Application</string>
+
+    <string name="text_name">Student Name</string>
+
+    <string name="button_check_result">Check Result</string>
+    <string name="button_choose_image">Choose Image</string>
+    <string name="button_upload">Upload</string>
+</resources>
