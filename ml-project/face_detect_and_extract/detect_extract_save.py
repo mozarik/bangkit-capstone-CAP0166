@@ -4,6 +4,7 @@ import cv2
 from PIL import Image
 import numpy as np 
 from matplotlib import pyplot as plt
+import matplotlib.image as mpimg
 import sys
 import os
 import traceback
@@ -11,10 +12,11 @@ import traceback
 def detect_faces(image_path, display=True):
     mtcnn = MTCNN(margin=20, keep_all=True, post_process=False, device='cuda:0')
     image = image_path
+    image = mpimg.imread(image)
     image = Image.fromarray(image)
     faces = mtcnn(image)
     count = 0
-    for face in zip(faces):
+    for face in faces:
         face = face.permute(1, 2, 0).int().numpy()
         cv2.imwrite(os.path.join(path_folder, "face"+str(count)+".jpg"),face)
         count = count + 1
@@ -24,7 +26,7 @@ if __name__ == "__main__":
     
 	fcount = 0
 	while os.path.exists("ExtractedFaceFolder" + str(fcount)) == True:
-		count = count + 1
+		fcount = fcount + 1
 		if os.path.exists("ExtractedFaceFolder" + str(fcount)) == False:
 			break
 		else:
