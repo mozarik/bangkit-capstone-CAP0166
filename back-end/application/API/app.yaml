@@ -6,4 +6,4 @@ runtime_config:
   python_versions: 3
 
 env_variables:
-  CLOUD_STORAGE_BUCKET: the-watcher-storage-file
+  CLOUD_STORAGE_BUCKET: "the-watcher-storage-file"
