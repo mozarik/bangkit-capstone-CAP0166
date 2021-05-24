@@ -58,6 +58,4 @@ def command_line_parser():
 
 if __name__ == "__main__":
     args = command_line_parser()
-    # print("image_path {}, save_path{}".format(
-    #     argument.image_path, argument.save_path))
     extract_face(args.image_path, args.save_path)
