@@ -8,50 +8,56 @@ import matplotlib.image as mpimg
 import sys
 import os
 import traceback
+import argparse
 
 
-def detect_faces(image_path):
+def extract_face(image_path, save_path):
+    """ Extract individual faces to a save_path
+
+    Parameters
+    ----------
+    image_path : str
+        image path of many faces that you want to extract
+    print_cols : str
+        save_path is where you want to save individual face image
+
+        example: 
+            save_path="face.jpg". it will create an individual faces with filename
+            face{i}.jpg where i is incremental from 1 to number of faces
+
+    Returns
+    -------
+    None
+    """
+
     mtcnn = MTCNN(margin=20, keep_all=True,
                   post_process=False, device='cuda:0')
     image = image_path
     image = mpimg.imread(image)
     image = Image.fromarray(image)
-    faces = mtcnn(image)
-    count = 0
-    for face in faces:
-        face = face.permute(1, 2, 0).int().numpy()
-        # cv2.imwrite(os.path.join(
-        #     path_folder, "face" + str(count) + ".jpg"),face)
-        face = Image.fromarray((face).astype(np.uint8))
-        face.save(os.path.join(path_folder, "face" + str(count) + ".jpg"))
-        count = count + 1
+    mtcnn(image, save_path=save_path)
+
+
+def command_line_parser():
+    """ Hmmm well return all the parser argument ;)
+
+    Returns
+    -------
+    Return args parser
+    """
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("image_path", type=str,
+                        help="Image you want to extract individual faces")
+    parser.add_argument("save_path", type=str,
+                        help="Save image path of individual faces ex:Extracted/face.jpg")
+    args = parser.parse_args()
+
+    return args
 
 
 if __name__ == "__main__":
-
-    fcount = 0
-    while os.path.exists("ExtractedFaceFolder" + str(fcount)) == True:
-        fcount = fcount + 1
-        if os.path.exists("ExtractedFaceFolder" + str(fcount)) == False:
-            break
-        else:
-            continue
-    os.mkdir("ExtractedFaceFolder" + str(fcount))
-    path_folder = "ExtractedFaceFolder" + str(fcount)
-
-    if len(sys.argv) < 2:
-        print("Usage: python detect_extract_save.py 'image path'")
-        sys.exit()
-
-    if os.path.isdir(sys.argv[1]):
-        for image in os.listdir(sys.argv[1]):
-            try:
-                print("Processing.....",os.path.abspath(
-                    os.path.join(sys.argv[1],image)))
-                detect_faces(os.path.abspath(
-                    os.path.join(sys.argv[1],image)),False)
-            except Exception:
-                print("Could not process ",os.path.abspath(
-                    os.path.join(sys.argv[1],image)))
-    else:
-        detect_faces(sys.argv[1])
+    args = command_line_parser()
+    # print("image_path {}, save_path{}".format(
+    #     argument.image_path, argument.save_path))
+    extract_face(args.image_path, args.save_path)
