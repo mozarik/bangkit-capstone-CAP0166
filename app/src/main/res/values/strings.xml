@@ -6,4 +6,6 @@
     <string name="button_check_result">Check Result</string>
     <string name="button_choose_image">Choose Image</string>
     <string name="button_upload">Upload</string>
+
+    <string name="page_error">Something went wrong....</string>
 </resources>
