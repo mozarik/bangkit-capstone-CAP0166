@@ -1,4 +1,5 @@
-# Embedding Workflow
-![Test Image 1](https://github.com/mozarik/bangkit-capstone-CAP0166/blob/develop/assets/model-training-flow.jpg)
+# Embedding flow
+![Embedding Process](https://github.com/mozarik/bangkit-capstone-CAP0166/blob/develop/assets/model-training-flow.jpg)
 
-# Training Workflow
+# Predict flow
+![Predict Process](https://github.com/mozarik/bangkit-capstone-CAP0166/blob/develop/assets/predict-workflow.jpg)
