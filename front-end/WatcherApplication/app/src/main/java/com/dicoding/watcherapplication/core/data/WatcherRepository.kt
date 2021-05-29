@@ -25,13 +25,15 @@ class WatcherRepository(
             }
 
             override fun shouldFetch(data: List<Student>?): Boolean =
-                data == null || data.isEmpty()
+//                data == null || data.isEmpty()
+                true
 
 
             override suspend fun createCall(): Flow<ApiResponse<List<StudentResponse>>> =
                 remoteDataSource.getAllStudent()
 
             override suspend fun saveCallResult(data: List<StudentResponse>) {
+                localDataSource.deleteAllStudentTableData()//to clear all data and replace with new one to view
                 val studentList = DataMapper.mapResponseToEntitiesStudent(data)
                 localDataSource.insertStudent(studentList)
             }

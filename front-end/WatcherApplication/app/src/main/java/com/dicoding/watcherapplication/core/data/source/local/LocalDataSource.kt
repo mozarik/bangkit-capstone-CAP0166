@@ -8,4 +8,6 @@ class LocalDataSource(private val watcherDao: WatcherDao) {
     fun getAllStudent(): Flow<List<StudentEntity>> = watcherDao.getAllStudent()
 
     fun insertStudent(studentList: List<StudentEntity>) = watcherDao.insertStudent(studentList)
+
+    fun deleteAllStudentTableData() = watcherDao.deleteAllDataInTableStudent()
 }

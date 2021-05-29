@@ -30,24 +30,24 @@ class PhoneActivity : AppCompatActivity() {
 //        }
 
         phoneViewModel.student.observe(this, { dataStudent ->
-//            if (dataStudent != null) {
-//                when(dataStudent) {
-//                    is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
-//                    is Resource.Success -> {
-//                        binding.progressBar.visibility = View.GONE
-//                        studentViewAdapter.setData(dataStudent.data)
-//                    }
-//                    is Resource.Error -> {
-//                        binding.progressBar.visibility = View.GONE
-//                        binding.viewError.root.visibility = View.VISIBLE
-//                        binding.viewError.textError.text = dataStudent.message ?: getString(R.string.page_error)
-//                    }
-//                }
-//            }
+            if (dataStudent != null) {
+                when(dataStudent) {
+                    is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                    is Resource.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        studentViewAdapter.setData(dataStudent.data)
+                    }
+                    is Resource.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        binding.viewError.root.visibility = View.VISIBLE
+                        binding.viewError.textError.text = dataStudent.message ?: getString(R.string.page_error)
+                    }
+                }
+            }
 
             //data dummy for testing the student list
             //note: don't forget to comment above code (from if to it curly brace)
-            studentViewAdapter.setData(DataDummy.generateStudentDummy())
+//            studentViewAdapter.setData(DataDummy.generateStudentDummy())
         })
 
         with(binding.recyclerViewStudent) {

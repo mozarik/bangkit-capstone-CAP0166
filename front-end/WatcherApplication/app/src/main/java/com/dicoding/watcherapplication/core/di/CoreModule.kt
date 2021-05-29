@@ -22,7 +22,7 @@ val databaseModule = module {
         Room.databaseBuilder(
             androidContext(),
             WatcherDatabase::class.java,"Watcher.db"
-        ).fallbackToDestructiveMigration().build()
+        ).fallbackToDestructiveMigration().allowMainThreadQueries().build()
     }
 }
 
@@ -36,7 +36,7 @@ val networkModule = module {
     }
     single {
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://imperial-berm-311408.et.r.appspot.com/")
+            .baseUrl("https://ce6ca273-76c5-45f1-b418-f5e2bf5b71db.mock.pstmn.io/student_list/")//mock link using postman
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()
