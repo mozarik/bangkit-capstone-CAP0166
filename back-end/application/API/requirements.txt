@@ -14,3 +14,5 @@ websockets==8.1
 wrapt==1.11.2
 fastapi==0.64.0
 pydantic==1.8.1
+python-multipart==0.0.5
+google-cloud-storage==1.38.0
