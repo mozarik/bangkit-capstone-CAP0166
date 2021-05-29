@@ -12,6 +12,9 @@ interface WatcherDao {
     @Query("SELECT * FROM student")
     fun getAllStudent(): Flow<List<StudentEntity>>
 
+    @Query("DELETE FROM student")
+    fun deleteAllDataInTableStudent()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertStudent(student: List<StudentEntity>)
 }

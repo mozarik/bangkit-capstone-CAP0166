@@ -5,8 +5,10 @@ import com.dicoding.watcherapplication.core.data.source.remote.network.ApiRespon
 import com.dicoding.watcherapplication.core.data.source.remote.network.ApiService
 import com.dicoding.watcherapplication.core.data.source.remote.response.PostRequest
 import com.dicoding.watcherapplication.core.data.source.remote.response.StudentResponse
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class RemoteDataSource(private val apiService: ApiService) {
 
@@ -25,7 +27,7 @@ class RemoteDataSource(private val apiService: ApiService) {
                 emit(ApiResponse.Error(e.toString()))
                 Log.e("RemoteDataSource", e.toString())
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     //upload

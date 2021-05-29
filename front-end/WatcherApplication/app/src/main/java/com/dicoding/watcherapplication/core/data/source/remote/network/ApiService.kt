@@ -9,8 +9,9 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface ApiService {
-
-    @GET("dummy")
+    //student_mock
+    //student
+    @GET("student_mock")
     suspend fun getList():ListStudentResponse
 
     //upload (haven't tested) maybe need suspend like getList()?
