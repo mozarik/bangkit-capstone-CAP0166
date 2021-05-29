@@ -8,7 +8,7 @@ from sklearn.preprocessing import Normalizer
 from scipy.spatial.distance import cosine
 from tensorflow.keras.models import load_model
 import pickle
-import cv2
+import sys
 import os
 
 
@@ -78,11 +78,11 @@ def detect(img ,detector,encoder,encoding_dict):
     
     return detection_percentage
 
-def predict(folder_path, path_encoding):
+def predict(folder_path, path_encoding, model_path):
     prediction = []
     face_detector = mtcnn.MTCNN()
     face_encoder = InceptionResNetV2() 
-    weight_path = "model/facenet_keras_weights.h5"
+    weight_path = model_path
     face_encoder.load_weights(weight_path)
     encoding_path = path_encoding
     encoding_dict = load_pickle(encoding_path)
@@ -98,23 +98,20 @@ def predict(folder_path, path_encoding):
 
 if __name__ == "__main__":
     
-    if len(sys.argv) < 3:
-        print("Usage: python predict.py 'Folder_path' 'Encoding_path'")
+    if len(sys.argv) < 4:
+        print("Usage: python predict.py 'Folder_path' 'Encoding_path.pkl' 'Model_path.h5'")
         sys.exit()
 
-    if os.path.isdir(sys.argv[1]):
-        for image in os.listdir(sys.argv[1]):
-            try:
-                print ("Processing folder path.....",os.path.abspath(os.path.join(sys.argv[1],image)))
-                if os.path.isdir(sys.argv[2]):
-                    try:
-                        for encoding in os.listdir(sys.argv[2]):
-                            print ("Processing encoding.pkl path.....",os.path.abspath(os.path.join(sys.argv[2],encoding)))
-                            predict(os.path.abspath(os.path.join(sys.argv[1],image), os.path.abspath(os.path.join(sys.argv[2],encoding))),False)
-                    except Exception:
-                        print ("Could not process ", os.path.abspath(os.path.join(sys.argv[2],encoding)))
-            except Exception:
-                print ("Could not process ",os.path.abspath(os.path.join(sys.argv[1],image)))
- 
+    if os.path.isdir(sys.argv[1]) == False:
+        print("Couldn't find folder!")
     else:
-        predict(sys.argv[1], sys.argv[2])
+        if os.path.isfile(sys.argv[2]) == False:
+            print("Couldn't find encodings.pkl file!")
+        else:
+            if os.path.isfile(sys.argv[3]) == False:
+                print("Couldn't find model.h5 file!")
+            else:
+                predict(sys.argv[1], sys.argv[2], sys.argv[3])
+        
+
+        
