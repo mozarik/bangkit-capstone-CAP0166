@@ -1,11 +1,12 @@
-import cv2 
-import numpy as np 
-import mtcnn 
+import cv2
+import numpy as np
+import mtcnn
 from model_architecture import *
 from sklearn.preprocessing import Normalizer
 from scipy.spatial.distance import cosine
 from tensorflow.keras.models import load_model
 import pickle
+
 
 class Predict:
     """
@@ -29,46 +30,50 @@ class Predict:
         bunch of face encoder values in encoding_dictionary. The result of comparing is to get the nearest value of a label that best decribe the face input. The return of this function
         if a list that contain prediction label with it's prediction score
 
-    predict(image: numpy ndarray, str_path: .pkl file for encodings, str_path: .h5 file for model) -> list: [dictionary: {'name': label, 'percentage': prediction score}]
+    predict_face(image: numpy ndarray, str_path: .pkl file for encodings, str_path: .h5 file for model) -> list: [dictionary: {'name': label, 'percentage': prediction score}]
         this method take image: numpy ndarray, str_path: .pkl file for encodings, str_path: .h5 file for model then pass image: numpy ndarray, MTCNN API, MTCNN object, encoding_dictionary
         to raw_predict. The return of this function is to get list that conating dictionary of label prediction and it's prediction score
-        
+
     """
 
-    #Global variable
-    recognition_t=0.5
+    def __init__(self, pkl_path, model_path):
+        self.pkl_path = pkl_path
+        self.model_path = model_path
+
+    # Global variable
+    recognition_t = 0.5
     required_size = (160,160)
 
-    #Normalization
-    def normalize(face):
+    # Normalization
+    def normalize(self, face):
         mean, std = face.mean(), face.std()
         return (face - mean) / std
 
-    #Encode face after normalization
-    def get_encode(face_encoder, face, size):
-        face = normalize(face)
+    # Encode face after normalization
+    def get_encode(self, face_encoder, face, size):
+        face = self.normalize(face)
         face = cv2.resize(face, size)
         encode = face_encoder.predict(np.expand_dims(face, axis=0))[0]
         return encode
 
-    #Load pickle file
-    def load_pickle(path):
+    # Load pickle file
+    def load_pickle(self, path):
         with open(path, 'rb') as f:
             encoding_dict = pickle.load(f)
         return encoding_dict
 
-    #Detect face
-    def raw_predict(face ,detector,encoder,encoding_dict):
+    # Detect face
+    def raw_predict(self, face, encoder, encoding_dict):
         l2_normalizer = Normalizer('l2')
-        face = cv2.imread(face)
-        if face is None:
-            print("Image not Found!")
-        face_rgb = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
-        
+        # face = cv2.imread(face)
+        # if face is None:
+        #     print("Image not Found!")
+        # face_rgb = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
+
         # Detect Face In Image
-        results = detector.detect_faces(face_rgb)
-        
-        encode = get_encode(encoder, face_rgb, required_size)
+        # results = detector.detect_faces(face_rgb)
+
+        encode = self.get_encode(encoder, face, self.required_size)
         encode = l2_normalizer.transform(encode.reshape(1, -1))[0]
 
         name = "unknown"
@@ -77,28 +82,33 @@ class Predict:
         for pred_name, db_encode in encoding_dict.items():
             dist = cosine(db_encode, encode)
             # Jika semakin dekat or "dist is low" the accuracy is high
-            if dist < recognition_t and dist < distance:
-                    name = pred_name
-                    distance = dist
-                    detection_percentage = [name, distance]
-
+            if dist < self.recognition_t and dist < distance:
+                name = pred_name
+                distance = dist
+                detection_percentage = [name, distance]
 
         if name == "unknown":
             print("Doesnt recognize")
             detection_percentage = [name, 0.0]
         else:
             print("This is {} with Distance {}".format(name, distance))
-        
+
         return detection_percentage
 
-    #PredictFace
-    def predict(face, encoding_path, model_path):
+    # PredictFace
+    def predict_face(self, face):
         prediction = []
-        face_detector = mtcnn.MTCNN()
-        face_encoder = InceptionResNetV2() 
-        face_encoder.load_weights(model_path)
-        encoding_dict = load_pickle(encoding_path)
-        prediction_percentage = raw_predict(face, face_detector, face_encoder, encoding_dict)
-        dictionary = {'name':prediction_percentage[0], 'percentage': prediction_percentage[1]}
+        # face_detector = mtcnn.MTCNN()
+
+        face_encoder = InceptionResNetV2()
+
+        face_encoder.load_weights(self.model_path)
+
+        encoding_dict = self.load_pickle(self.pkl_path)
+
+        prediction_percentage = self.raw_predict(
+            face, face_encoder, encoding_dict)
+        dictionary = {
+            'name':prediction_percentage[0], 'percentage': prediction_percentage[1]}
         prediction.append(dictionary)
         return prediction
