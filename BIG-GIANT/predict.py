@@ -30,7 +30,6 @@ class Predict:
         bunch of face encoder values in encoding_dictionary. The result of comparing is to get the nearest value of a label that best decribe the face input. The return of this function
         if a list that contain prediction label with it's prediction score
 
-    __init__(image: numpy ndarray, str_path: .pkl file for encodings, str_path: .h5 file for model) -> list: [dictionary: {'name': label, 'percentage': prediction score}]
     predict(image: numpy ndarray, str_path: .pkl file for encodings, str_path: .h5 file for model) -> list: [dictionary: {'name': label, 'percentage': prediction score}]
         this method take image: numpy ndarray, str_path: .pkl file for encodings, str_path: .h5 file for model then pass image: numpy ndarray, MTCNN API, MTCNN object, encoding_dictionary
         to raw_predict. The return of this function is to get list that conating dictionary of label prediction and it's prediction score
@@ -84,12 +83,6 @@ class Predict:
             print("This is {} with Distance {}".format(name, distance))
 
         return detection_percentage
-
-    # init function
-    def __init__(self, face, pkl_path, model_path):
-
-        self.pkl_path = pkl_path
-        self.model_path = model_path
 
     # PredictFace
     def predict(face, encoding_path, model_path):
