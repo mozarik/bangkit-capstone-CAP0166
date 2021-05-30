@@ -98,7 +98,7 @@ class Predict:
     # PredictFace
     def predict_face(self, face):
         prediction = []
-        # face_detector = mtcnn.MTCNN()
+        # face_detector = mtcnn.MTCNN() test
 
         face_encoder = InceptionResNetV2()
 
