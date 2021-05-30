@@ -1,11 +1,15 @@
 import os
 import hashlib
 import time
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, Depends
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 from google.cloud import storage
+from sqlalchemy.orm import Session
+
+from . import schemas, models
+from .database import SessionLocal, engine
 
 app = FastAPI()
 
@@ -19,6 +23,15 @@ class Profile(BaseModel):
     TTL: datetime
     golonganDarah: str
     pekerjaan: Optional[str] = None
+
+
+# Dependency
+def get_db():
+    try:
+        db = SessionLocal()
+        yield db
+    finally:
+        db.close()
 
 
 @app.get("/")
@@ -53,3 +66,9 @@ async def create_upload_file(file: UploadFile = File(...)):
     blob.make_public()
     # The public URL can be used to directly access the uploaded file via HTTP.
     return {"status": 200, "data": blob.public_url}
+
+
+@app.get("/records/", response_model=List[schemas.Preprocess])
+def show_records(db: Session = Depends(get_db)):
+    records = db.query(models.Preprocess).all()
+    return records
