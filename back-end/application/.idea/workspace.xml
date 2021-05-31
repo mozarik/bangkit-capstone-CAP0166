@@ -20,7 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d152dce-be81-4956-94c2-1be34052f517" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/API/app/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/app/crud.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/API/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/app/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/API/app/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/API/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/API/app/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/app/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/API/app/schemas.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/API/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,12 +53,14 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/API" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\projek\bangkit-capstone-CAP0166\back-end\application\API" />
       <recent name="E:\projek\bangkit-capstone-CAP0166\back-end\application\API\app" />
+      <recent name="E:\projek\bangkit-capstone-CAP0166\back-end\application\API\app\database" />
+      <recent name="E:\projek\bangkit-capstone-CAP0166\back-end\application\API" />
     </key>
   </component>
   <component name="RunManager">
@@ -110,6 +119,14 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="444" y="186" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.768/1366.0.1366.768@0.0.1366.768" timestamp="1622294181904" />
+    <state x="1779" y="131" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1622378847624">
+      <screen x="1366" y="0" width="1366" height="768" />
+    </state>
+    <state x="1779" y="131" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.768/1366.0.1366.768@1366.0.1366.768" timestamp="1622378847624" />
+    <state x="1829" y="139" key="FileChooserDialogImpl" timestamp="1622379359883">
+      <screen x="1366" y="0" width="1366" height="768" />
+    </state>
+    <state x="1829" y="139" key="FileChooserDialogImpl/0.0.1366.768/1366.0.1366.768@1366.0.1366.768" timestamp="1622379359883" />
     <state width="1328" height="189" key="GridCell.Tab.0.bottom" timestamp="1620537142226">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -130,5 +147,9 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="184" y="29" key="SettingsEditor/0.0.1366.768/1366.0.1366.768@0.0.1366.768" timestamp="1622268409808" />
+    <state x="1366" y="0" width="585" height="768" key="find.popup" timestamp="1622373751597">
+      <screen x="1366" y="0" width="1366" height="768" />
+    </state>
+    <state x="1366" y="0" width="585" height="768" key="find.popup/0.0.1366.768/1366.0.1366.768@1366.0.1366.768" timestamp="1622373751597" />
   </component>
 </project>
