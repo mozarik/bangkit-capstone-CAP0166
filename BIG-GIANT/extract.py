@@ -39,7 +39,7 @@ class Extract:
 
     def extract_face_to_list(self, image):
         mtcnn = MTCNN(margin=20, keep_all=True,
-                      post_process=False, device='cuda:0')
+                      post_process=False)
         faces = mtcnn(image)
 
         list_of_faces = []

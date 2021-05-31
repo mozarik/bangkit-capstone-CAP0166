@@ -87,6 +87,7 @@ class Predict:
         for pred_name, db_encode in encoding_dict.items():
             dist = cosine(db_encode, encode)
             # Jika semakin dekat or "dist is low" the accuracy is high
+            print("Distance from {} is {}".format(pred_name, dist))
             if dist < self.recognition_t and dist < distance:
                 name = pred_name
                 distance = dist
