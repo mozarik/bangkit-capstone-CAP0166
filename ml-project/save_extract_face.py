@@ -39,7 +39,7 @@ def extract_face(image_path, save_path):
 
 
 def command_line_parser():
-    """ Hmmm well return all the parser argument ;)
+    """ Hmmm well return all the parser argument
 
     Returns
     -------
