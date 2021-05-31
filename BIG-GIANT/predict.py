@@ -37,8 +37,13 @@ class Predict:
     """
 
     def __init__(self, pkl_path, model_path):
+
         self.pkl_path = pkl_path
         self.model_path = model_path
+
+        self.face_encoder = InceptionResNetV2()
+        self.face_encoder.load_weights(self.model_path)
+        self.encoding_dict = self.load_pickle(self.pkl_path)
 
     # Global variable
     recognition_t = 0.5
@@ -98,16 +103,9 @@ class Predict:
     # PredictFace
     def predict_face(self, face):
         prediction = []
-        # face_detector = mtcnn.MTCNN() test
-
-        face_encoder = InceptionResNetV2()
-
-        face_encoder.load_weights(self.model_path)
-
-        encoding_dict = self.load_pickle(self.pkl_path)
 
         prediction_percentage = self.raw_predict(
-            face, face_encoder, encoding_dict)
+            face, self.face_encoder, self.encoding_dict)
         dictionary = {
             'name':prediction_percentage[0], 'percentage': prediction_percentage[1]}
         prediction.append(dictionary)
