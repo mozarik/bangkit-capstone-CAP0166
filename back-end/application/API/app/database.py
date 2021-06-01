@@ -5,8 +5,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 ''' DATABASE CONNECTION '''
-SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:@localhost:3306/db_watcher"
-# SQLALCHEMY_DATABASE_URL = os.environ.get('DB_CONN')
+# SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:@localhost:3306/db_watcher"
+SQLALCHEMY_DATABASE_URL = os.environ.get('DB_CONN')
 
 db_user = os.environ.get("DB_USER")
 db_pass = os.environ.get("DB_PASS")
