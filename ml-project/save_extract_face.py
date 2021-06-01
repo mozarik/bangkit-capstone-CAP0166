@@ -31,7 +31,7 @@ def extract_face(image_path, save_path):
     """
 
     mtcnn = MTCNN(margin=20, keep_all=True,
-                  post_process=False, device='cuda:0')
+                  post_process=False)
     image = image_path
     image = mpimg.imread(image)
     image = Image.fromarray(image)
@@ -39,7 +39,7 @@ def extract_face(image_path, save_path):
 
 
 def command_line_parser():
-    """ Hmmm well return all the parser argument ;)
+    """ Hmmm well return all the parser argument
 
     Returns
     -------
