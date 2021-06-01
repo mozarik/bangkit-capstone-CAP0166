@@ -11,6 +11,7 @@ ENV CLOUD_STORAGE_BUCKET="the-watcher-storage-file"
 ENV DB_CONN="mysql+pymysql://root:1234567890@/db_watcher?unix_socket=/cloudsql/imperial-berm-311408:asia-southeast2:the-watchersql"
 ENV DB_USER="root"
 ENV DB_PASS="1234567890"
+ENV DB_NAME="db_watcher"
 ENV CLOUD_SQL_CONNECTION_NAME="imperial-berm-311408:asia-southeast2:the-watchersql"
 
 
