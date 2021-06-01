@@ -14,6 +14,7 @@ from database import SessionLocal, engine
 
 from extract import Extract
 from entry_ml import numpyarray_to_blob
+from predict import Predict
 
 app = FastAPI()
 
@@ -21,6 +22,13 @@ CLOUD_STORAGE_BUCKET = os.environ.get('CLOUD_STORAGE_BUCKET')
 
 models.Base.metadata.create_all(bind=engine)
 
+# config predict
+pkl_path = os.environ.get('PICKL_PATH')
+model_path = os.environ.get('PATH_MODEL')
+predict = Predict(
+    pkl_path=pkl_path,
+    model_path=model_path
+)
 
 # Dependency
 def get_db():
@@ -63,7 +71,7 @@ async def create_upload_file(baclground_tasks: BackgroundTasks, file: UploadFile
     create_preprocess(db=db, preprocess=model)
 
     # using background task
-    baclground_tasks.add_task(extract_face_url, blob.public_url, file.content_type)
+    baclground_tasks.add_task(extract_face_url, blob.public_url, file.content_type, db)
 
     # file_numpy = extract.read_image(image=blob.public_url)
     # content2 = numpyarray_to_blob(file_numpy)
@@ -80,7 +88,7 @@ async def create_upload_file(baclground_tasks: BackgroundTasks, file: UploadFile
     return {"status": 200, "data": blob.public_url}
 
 
-def extract_face_url(url: str, content_type):
+def extract_face_url(url: str, content_type, db : Session):
     gcs = storage.Client()
     bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET)
 
@@ -89,6 +97,11 @@ def extract_face_url(url: str, content_type):
     list_of_faces = extract.extract_face_to_list(image_of_faces)
 
     # tambah fungsi predict for i in list_of_faces
+    # list of dict
+    list_data = []
+    for i in list_of_faces:
+        data = predict.predict_face(i)
+        list_data.append(data[0])
 
     list_url_face = []
     for i in list_of_faces:
@@ -102,6 +115,18 @@ def extract_face_url(url: str, content_type):
         )
         blob_face.make_public()
         list_url_face.append(blob_face.public_url)
+
+    data = db.query(models.Preprocess).filter(models.Preprocess.img_url == url).first()
+    id = data.id
+
+    for i in range(len(list_data)):
+        model = schemas.PostprocessCreate(
+            img_url=list_url_face[i],
+            name=list_data[i]['name'],
+            percentage=list_data[i]['percentage'],
+            parent_id=id
+        )
+        create_postprocess(db=db, postprocess=model)
 
 
 @app.post("/add-preprocess/", response_model=schemas.Preprocess)
