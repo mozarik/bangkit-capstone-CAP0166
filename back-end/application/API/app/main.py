@@ -90,6 +90,7 @@ async def create_upload_file(background_tasks: BackgroundTasks, file: UploadFile
 
 
 def extract_face_url(url: str, content_type, db: Session):
+    logging.basicConfig(level=logging.DEBUG)
     gcs = storage.Client()
     bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET)
 
