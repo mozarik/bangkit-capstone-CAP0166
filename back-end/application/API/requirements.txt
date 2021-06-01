@@ -18,8 +18,9 @@ python-multipart==0.0.5
 google-cloud-storage==1.38.0
 SQLAlchemy==1.4.16
 PyMySQL
-# numpy==1.20.3
+numpy==1.20.3
 scikit-image==0.18.1
 facenet-pytorch==2.5.2
 matplotlib==3.4.2
 validators==0.18.2
+opencv-python==4.5.2.52
