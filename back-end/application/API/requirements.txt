@@ -23,4 +23,3 @@ scikit-image==0.18.1
 facenet-pytorch==2.5.2
 matplotlib==3.4.2
 validators==0.18.2
-opencv-python==4.5.2.52

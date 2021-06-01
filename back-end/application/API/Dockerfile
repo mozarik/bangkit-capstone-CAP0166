@@ -1,5 +1,6 @@
 
-FROM python:3.7
+# FROM python:3.7
+FROM  jjanzic/docker-python3-opencv
 
 RUN mkdir -p /app
 
