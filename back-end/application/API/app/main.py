@@ -12,6 +12,9 @@ import models
 import schemas
 from database import SessionLocal, engine
 
+from extract import Extract
+from entry_ml import numpyarray_to_blob
+
 app = FastAPI()
 
 CLOUD_STORAGE_BUCKET = os.environ.get('CLOUD_STORAGE_BUCKET')
@@ -53,13 +56,27 @@ async def create_upload_file(file: UploadFile = File(...), db: Session = Depends
         content,
         content_type=file.content_type
     )
-    blob.make_public()\
+    blob.make_public()
 
     # insert to database
     model = schemas.PreprocessCreate(img_url=blob.public_url)
     create_preprocess(db=db, preprocess=model)
 
-    return {"status": 200, "data": blob.public_url}
+
+    extract = Extract()
+    file_numpy = extract.read_image(image=blob.public_url)
+
+    # create name file for encrypted
+    name_file2 = str(time.time())
+    result2 = hashlib.md5(name_file2.encode('utf-8')).hexdigest()
+    # Create a new blob and upload the file's content.
+    blob2 = bucket.blob(str(result))
+    blob2.upload_from_string(
+        file_numpy,
+        content_type=file.content_type
+    )
+    blob2.make_public()
+    return {"status": 200, "data": blob2.public_url}
 
 
 @app.post("/add-preprocess/", response_model=schemas.Preprocess)
