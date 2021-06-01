@@ -3,6 +3,8 @@ import numpy as np
 from facenet_pytorch import MTCNN
 import validators
 import matplotlib.image as mpimg
+from cv2 import cv2
+import urllib.request
 
 
 def is_image_from_url(url: str):
@@ -55,11 +57,14 @@ class Extract:
         return list_of_faces
 
     def image_from_url(self, image_url):
-        image = io.imread(image_url)
+        resp = urllib.request.urlopen(image_url)
+        image = np.asarray(bytearray(resp.read()), dtype="uint8")
+        image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         return image
 
     def image_from_path(self, image_path):
-        image = mpimg.imread(image_path)
+        image = cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2RGB)
         return image
 
     def read_image(self, image: str):
