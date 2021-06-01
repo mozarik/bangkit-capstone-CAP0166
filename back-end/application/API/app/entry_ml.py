@@ -1,5 +1,5 @@
 import numpy as np
-import cv2
+from cv2 import cv2
 
 def numpyarray_to_blob(numpyArray: np):
     success, encoded_image = cv2.imencode('.jpg', numpyArray)

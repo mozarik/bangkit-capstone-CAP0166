@@ -72,6 +72,7 @@ async def create_upload_file(file: UploadFile = File(...), db: Session = Depends
     blob2 = bucket.blob(str(result2))
     blob2.upload_from_string(
         content2,
+        content_type=file.content_type
     )
     blob2.make_public()
     return {"status": 200, "data": blob2.public_url}
