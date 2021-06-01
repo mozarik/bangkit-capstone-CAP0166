@@ -26,8 +26,8 @@ models.Base.metadata.create_all(bind=engine)
 pkl_path = os.environ.get('PICKL_PATH')
 model_path = os.environ.get('PATH_MODEL')
 predict = Predict(
-    pkl_path=pkl_path,
-    model_path=model_path
+    pkl_path=os.path.join(os.getcwd(),"encodings-demo.pkl"),
+    model_path=os.path.join(os.getcwd(),"facenet_keras_weights.h5")
 )
 
 # Dependency
@@ -45,7 +45,7 @@ def read_root():
 
 
 @app.post("/uploadfile/")
-async def create_upload_file(baclground_tasks: BackgroundTasks, file: UploadFile = File(...),
+async def create_upload_file(background_tasks: BackgroundTasks, file: UploadFile = File(...),
                              db: Session = Depends(get_db)):
     # Create a Cloud Storage client.
     gcs = storage.Client()
@@ -71,7 +71,7 @@ async def create_upload_file(baclground_tasks: BackgroundTasks, file: UploadFile
     create_preprocess(db=db, preprocess=model)
 
     # using background task
-    baclground_tasks.add_task(extract_face_url, blob.public_url, file.content_type, db)
+    background_tasks.add_task(extract_face_url, blob.public_url, file.content_type, db)
 
     # file_numpy = extract.read_image(image=blob.public_url)
     # content2 = numpyarray_to_blob(file_numpy)
