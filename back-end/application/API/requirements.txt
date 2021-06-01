@@ -26,3 +26,4 @@ validators==0.18.2
 opencv-python==4.5.2.52
 scikit-learn==0.24.2
 mtcnn==0.1.0
+tensorflow==2.4.1
