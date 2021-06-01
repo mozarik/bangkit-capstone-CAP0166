@@ -88,6 +88,8 @@ def extract_face_url(url: str, content_type):
     image_of_faces = extract.image_from_url(url)
     list_of_faces = extract.extract_face_to_list(image_of_faces)
 
+    # tambah fungsi predict for i in list_of_faces
+
     list_url_face = []
     for i in list_of_faces:
         content_face = numpyarray_to_blob(i)
