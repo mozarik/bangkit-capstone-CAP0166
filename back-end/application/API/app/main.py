@@ -2,7 +2,7 @@ import hashlib
 import os
 import time
 
-from fastapi import FastAPI, Depends, UploadFile, File
+from fastapi import FastAPI, Depends, UploadFile, File, HTTPException
 from google.cloud import storage
 
 from sqlalchemy.orm import Session
@@ -15,6 +15,8 @@ from database import SessionLocal, engine
 app = FastAPI()
 
 CLOUD_STORAGE_BUCKET = os.environ.get('CLOUD_STORAGE_BUCKET')
+
+
 # models.Base.metadata.create_all(bind=engine)
 
 
@@ -33,7 +35,7 @@ def read_root():
 
 
 @app.post("/uploadfile/")
-async def create_upload_file(file: UploadFile = File(...)):
+async def create_upload_file(file: UploadFile = File(...), db: Session = Depends(get_db)):
     # Create a Cloud Storage client.
     gcs = storage.Client()
 
@@ -51,8 +53,12 @@ async def create_upload_file(file: UploadFile = File(...)):
         content,
         content_type=file.content_type
     )
-    blob.make_public()
-    # The public URL can be used to directly access the uploaded file via HTTP.
+    blob.make_public()\
+
+    # insert to database
+    model = schemas.PreprocessCreate(img_url=blob.public_url)
+    create_preprocess(db=db, preprocess=model)
+
     return {"status": 200, "data": blob.public_url}
 
 
@@ -62,5 +68,14 @@ def create_preprocess(preprocess: schemas.PreprocessCreate, db: Session = Depend
 
 
 @app.post("/add-postprocess/", response_model=schemas.Postprocess)
-def create_preprocess(postprocess: schemas.PostprocessCreate, db: Session = Depends(get_db)):
+def create_postprocess(postprocess: schemas.PostprocessCreate, db: Session = Depends(get_db)):
     return crud.create_postprocess(db=db, postprocess=postprocess)
+
+
+@app.get("/postprocess/{parent_id}")
+def read_postprocess(parent_id: int, db: Session = Depends(get_db)):
+    db_postprocess = crud.get_postprocess(db, parent_id=parent_id)
+
+    if db_postprocess is None:
+        raise HTTPException(status_code=404, detail="Postprocess not found")
+    return db_postprocess
