@@ -65,15 +65,14 @@ async def create_upload_file(file: UploadFile = File(...), db: Session = Depends
 
     extract = Extract()
     file_numpy = extract.read_image(image=blob.public_url)
-
+    content2 = numpyarray_to_blob(file_numpy)
     # create name file for encrypted
     name_file2 = str(time.time())
     result2 = hashlib.md5(name_file2.encode('utf-8')).hexdigest()
     # Create a new blob and upload the file's content.
-    blob2 = bucket.blob(str(result))
+    blob2 = bucket.blob(str(result2))
     blob2.upload_from_string(
-        file_numpy,
-        content_type=file.content_type
+        content2,
     )
     blob2.make_public()
     return {"status": 200, "data": blob2.public_url}
