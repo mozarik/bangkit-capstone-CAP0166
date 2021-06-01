@@ -1,7 +1,6 @@
 import os
 
 import sqlalchemy
-from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -9,17 +8,17 @@ from sqlalchemy.orm import sessionmaker
 SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:@localhost:3306/db_watcher"
 # SQLALCHEMY_DATABASE_URL = os.environ.get('DB_CONN')
 
-# db_user = os.environ["DB_USER"]
-# db_pass = os.environ["DB_PASS"]
-# db_name = os.environ["DB_NAME"]
+db_user = os.environ.get("DB_USER")
+db_pass = os.environ.get("DB_PASS")
+db_name = os.environ.get("DB_NAME")
 # db_socket_dir = os.environ.get("DB_SOCKET_DIR", "/cloudsql")
-# cloud_sql_connection_name = os.environ["CLOUD_SQL_CONNECTION_NAME"]
+cloud_sql_connection_name = os.environ.get("CLOUD_SQL_CONNECTION_NAME")
 
-db_user = "root"
-db_pass = "1234567890"
-db_name = "db_watcher"
+# db_user = "root"
+# db_pass = "1234567890"
+# db_name = "db_watcher"
 db_socket_dir = "/cloudsql"
-cloud_sql_connection_name = "imperial-berm-311408:asia-southeast2:the-watchersql"
+# cloud_sql_connection_name = "imperial-berm-311408:asia-southeast2:the-watchersql"
 
 engine = sqlalchemy.create_engine(
     # Equivalent URL:

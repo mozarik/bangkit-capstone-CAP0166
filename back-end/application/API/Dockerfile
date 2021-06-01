@@ -9,6 +9,10 @@ ENV PORT=8080
 ENV CLOUD_STORAGE_BUCKET="the-watcher-storage-file"
 # ENV DB_CONN="mysql+pymysql://root:1234567890@localhost:3306/db_watcher"
 ENV DB_CONN="mysql+pymysql://root:1234567890@/db_watcher?unix_socket=/cloudsql/imperial-berm-311408:asia-southeast2:the-watchersql"
+ENV DB_USER="root"
+ENV DB_PASS="1234567890"
+ENV CLOUD_SQL_CONNECTION_NAME="imperial-berm-311408:asia-southeast2:the-watchersql"
+
 
 WORKDIR /app/
 
