@@ -62,7 +62,6 @@ async def create_upload_file(file: UploadFile = File(...), db: Session = Depends
     model = schemas.PreprocessCreate(img_url=blob.public_url)
     create_preprocess(db=db, preprocess=model)
 
-
     extract = Extract()
     file_numpy = extract.read_image(image=blob.public_url)
     content2 = numpyarray_to_blob(file_numpy)
