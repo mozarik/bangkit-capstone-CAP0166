@@ -14,7 +14,8 @@ class PreprocessCreate(Preprocess):
 
 class Postprocess(BaseModel):
     img_url: str
-    data_predict: str
+    name: str
+    percentage: str
     parent_id: int
 
     class Config:

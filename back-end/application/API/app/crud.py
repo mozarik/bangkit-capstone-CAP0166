@@ -17,7 +17,8 @@ def get_postprocess(db: Session, parent_id: int):
 
 
 def create_postprocess(db: Session, postprocess: schemas.PostprocessCreate):
-    db_preprocess = models.Postprocess(img_url=postprocess.img_url, data_predict=postprocess.data_predict,
+    db_preprocess = models.Postprocess(img_url=postprocess.img_url, name=postprocess.name,
+                                       percentage=postprocess.percentage,
                                        parent_id=postprocess.parent_id)
     db.add(db_preprocess)
     db.commit()

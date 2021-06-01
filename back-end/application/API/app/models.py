@@ -18,5 +18,6 @@ class Postprocess(Base):
     __tablename__ = "postprocess"
     id = Column(Integer, primary_key=True)
     img_url = Column(String(255))
-    data_predict = Column(String(255))
+    name = Column(String(255))
+    percentage = Column(String(255))
     parent_id = Column(Integer, ForeignKey('preprocess.id'))

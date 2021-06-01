@@ -19,8 +19,7 @@ app = FastAPI()
 
 CLOUD_STORAGE_BUCKET = os.environ.get('CLOUD_STORAGE_BUCKET')
 
-
-# models.Base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=engine)
 
 
 # Dependency
@@ -63,19 +62,35 @@ async def create_upload_file(file: UploadFile = File(...), db: Session = Depends
     create_preprocess(db=db, preprocess=model)
 
     extract = Extract()
-    file_numpy = extract.read_image(image=blob.public_url)
-    content2 = numpyarray_to_blob(file_numpy)
-    # create name file for encrypted
-    name_file2 = str(time.time())
-    result2 = hashlib.md5(name_file2.encode('utf-8')).hexdigest()
-    # Create a new blob and upload the file's content.
-    blob2 = bucket.blob(str(result2))
-    blob2.upload_from_string(
-        content2,
-        content_type=file.content_type
-    )
-    blob2.make_public()
-    return {"status": 200, "data": blob2.public_url}
+    image_of_faces = extract.image_from_url(blob.public_url)
+    list_of_faces = extract.extract_face_to_list(image_of_faces)
+
+    list_url_face = []
+    for i in list_of_faces:
+        content_face = numpyarray_to_blob(i)
+        name_face = str(time.time())
+        result_face = hashlib.md5(name_face.encode('utf-8')).hexdigest()
+        blob_face = bucket.blob(str(result_face))
+        blob_face.upload_from_string(
+            content_face,
+            content_type=file.content_type
+        )
+        blob_face.make_public()
+        list_url_face.append(blob_face.public_url)
+
+    # file_numpy = extract.read_image(image=blob.public_url)
+    # content2 = numpyarray_to_blob(file_numpy)
+    # # create name file for encrypted
+    # name_file2 = str(time.time())
+    # result2 = hashlib.md5(name_file2.encode('utf-8')).hexdigest()
+    # # Create a new blob and upload the file's content.
+    # blob2 = bucket.blob(str(result2))
+    # blob2.upload_from_string(
+    #     content2,
+    #     content_type=file.content_type
+    # )
+    # blob2.make_public()
+    return {"status": 200, "data": list_url_face}
 
 
 @app.post("/add-preprocess/", response_model=schemas.Preprocess)
