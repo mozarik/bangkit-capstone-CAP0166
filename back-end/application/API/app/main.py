@@ -15,6 +15,7 @@ from database import SessionLocal, engine
 from extract import Extract
 from entry_ml import numpyarray_to_blob
 from predict import Predict
+import logging
 
 app = FastAPI()
 
@@ -88,20 +89,21 @@ async def create_upload_file(background_tasks: BackgroundTasks, file: UploadFile
     return {"status": 200, "data": blob.public_url}
 
 
-def extract_face_url(url: str, content_type, db : Session):
+def extract_face_url(url: str, content_type, db: Session):
     gcs = storage.Client()
     bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET)
 
     extract = Extract()
     image_of_faces = extract.image_from_url(url)
     list_of_faces = extract.extract_face_to_list(image_of_faces)
-
+    logging.debug(len(list_of_faces))
     # tambah fungsi predict for i in list_of_faces
     # list of dict
     list_data = []
     for i in list_of_faces:
         data = predict.predict_face(i)
         list_data.append(data[0])
+        logging.debug(data)
 
     list_url_face = []
     for i in list_of_faces:
@@ -118,6 +120,7 @@ def extract_face_url(url: str, content_type, db : Session):
 
     data = db.query(models.Preprocess).filter(models.Preprocess.img_url == url).first()
     id = data.id
+    logging.debug(data)
 
     for i in range(len(list_data)):
         model = schemas.PostprocessCreate(
