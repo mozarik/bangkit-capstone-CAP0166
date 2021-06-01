@@ -2,7 +2,7 @@ import hashlib
 import os
 import time
 
-from fastapi import FastAPI, Depends, UploadFile, File, HTTPException
+from fastapi import FastAPI, Depends, UploadFile, File, HTTPException, BackgroundTasks
 from google.cloud import storage
 
 from sqlalchemy.orm import Session
@@ -37,7 +37,8 @@ def read_root():
 
 
 @app.post("/uploadfile/")
-async def create_upload_file(file: UploadFile = File(...), db: Session = Depends(get_db)):
+async def create_upload_file(baclground_tasks: BackgroundTasks, file: UploadFile = File(...),
+                             db: Session = Depends(get_db)):
     # Create a Cloud Storage client.
     gcs = storage.Client()
 
@@ -61,22 +62,8 @@ async def create_upload_file(file: UploadFile = File(...), db: Session = Depends
     model = schemas.PreprocessCreate(img_url=blob.public_url)
     create_preprocess(db=db, preprocess=model)
 
-    extract = Extract()
-    image_of_faces = extract.image_from_url(blob.public_url)
-    list_of_faces = extract.extract_face_to_list(image_of_faces)
-
-    list_url_face = []
-    for i in list_of_faces:
-        content_face = numpyarray_to_blob(i)
-        name_face = str(time.time())
-        result_face = hashlib.md5(name_face.encode('utf-8')).hexdigest()
-        blob_face = bucket.blob(str(result_face))
-        blob_face.upload_from_string(
-            content_face,
-            content_type=file.content_type
-        )
-        blob_face.make_public()
-        list_url_face.append(blob_face.public_url)
+    # using background task
+    baclground_tasks.add_task(extract_face_url, blob.public_url, file.content_type)
 
     # file_numpy = extract.read_image(image=blob.public_url)
     # content2 = numpyarray_to_blob(file_numpy)
@@ -90,7 +77,29 @@ async def create_upload_file(file: UploadFile = File(...), db: Session = Depends
     #     content_type=file.content_type
     # )
     # blob2.make_public()
-    return {"status": 200, "data": list_url_face}
+    return {"status": 200, "data": blob.public_url}
+
+
+def extract_face_url(url: str, content_type):
+    gcs = storage.Client()
+    bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET)
+
+    extract = Extract()
+    image_of_faces = extract.image_from_url(url)
+    list_of_faces = extract.extract_face_to_list(image_of_faces)
+
+    list_url_face = []
+    for i in list_of_faces:
+        content_face = numpyarray_to_blob(i)
+        name_face = str(time.time())
+        result_face = hashlib.md5(name_face.encode('utf-8')).hexdigest()
+        blob_face = bucket.blob(str(result_face))
+        blob_face.upload_from_string(
+            content_face,
+            content_type=content_type
+        )
+        blob_face.make_public()
+        list_url_face.append(blob_face.public_url)
 
 
 @app.post("/add-preprocess/", response_model=schemas.Preprocess)
