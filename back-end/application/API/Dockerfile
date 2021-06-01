@@ -1,6 +1,6 @@
 
-# FROM python:3.7
-FROM  jjanzic/docker-python3-opencv
+FROM python:3.7
+# FROM  jjanzic/docker-python3-opencv
 
 RUN mkdir -p /app
 
@@ -19,6 +19,9 @@ ENV CLOUD_SQL_CONNECTION_NAME="imperial-berm-311408:asia-southeast2:the-watchers
 WORKDIR /app/
 
 COPY requirements.txt .
+
+RUN apt-get update
+RUN apt-get install libgl1-mesa-glx
 
 RUN pip install -r requirements.txt
 
