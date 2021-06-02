@@ -21,15 +21,16 @@ app = FastAPI()
 
 CLOUD_STORAGE_BUCKET = os.environ.get('CLOUD_STORAGE_BUCKET')
 
-models.Base.metadata.create_all(bind=engine)
+# models.Base.metadata.create_all(bind=engine)
 
 # config predict
 pkl_path = os.environ.get('PICKL_PATH')
 model_path = os.environ.get('PATH_MODEL')
 predict = Predict(
-    pkl_path=os.path.join(os.getcwd(),"encodings-demo.pkl"),
-    model_path=os.path.join(os.getcwd(),"facenet_keras_weights.h5")
+    pkl_path=os.path.join(os.getcwd(), "encodings-demo.pkl"),
+    model_path=os.path.join(os.getcwd(), "facenet_keras_weights.h5")
 )
+
 
 # Dependency
 def get_db():
@@ -149,4 +150,4 @@ def read_postprocess(parent_id: int, db: Session = Depends(get_db)):
 
     if db_postprocess is None:
         raise HTTPException(status_code=404, detail="Postprocess not found")
-    return db_postprocess
+    return {"status": 200, "data": db_postprocess}
