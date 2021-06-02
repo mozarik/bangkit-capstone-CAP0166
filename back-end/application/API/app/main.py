@@ -31,6 +31,8 @@ predict = Predict(
 )
 
 # Dependency
+
+
 def get_db():
     db = SessionLocal()
     try:
@@ -71,7 +73,8 @@ async def create_upload_file(baclground_tasks: BackgroundTasks, file: UploadFile
     create_preprocess(db=db, preprocess=model)
 
     # using background task
-    baclground_tasks.add_task(extract_face_url, blob.public_url, file.content_type, db)
+    baclground_tasks.add_task(
+        extract_face_url, blob.public_url, file.content_type, db)
 
     # file_numpy = extract.read_image(image=blob.public_url)
     # content2 = numpyarray_to_blob(file_numpy)
@@ -116,7 +119,8 @@ def extract_face_url(url: str, content_type, db : Session):
         blob_face.make_public()
         list_url_face.append(blob_face.public_url)
 
-    data = db.query(models.Preprocess).filter(models.Preprocess.img_url == url).first()
+    data = db.query(models.Preprocess).filter(
+        models.Preprocess.img_url == url).first()
     id = data.id
 
     for i in range(len(list_data)):
@@ -127,6 +131,10 @@ def extract_face_url(url: str, content_type, db : Session):
             parent_id=id
         )
         create_postprocess(db=db, postprocess=model)
+
+
+def extract_face_url2(url: str, content_type, db : Session):
+    pass
 
 
 @app.post("/add-preprocess/", response_model=schemas.Preprocess)
@@ -144,5 +152,6 @@ def read_postprocess(parent_id: int, db: Session = Depends(get_db)):
     db_postprocess = crud.get_postprocess(db, parent_id=parent_id)
 
     if db_postprocess is None:
-        raise HTTPException(status_code=404, detail="Postprocess not found")
+        raise HTTPException(
+            status_code=404, detail="Postprocess not found")
     return db_postprocess
