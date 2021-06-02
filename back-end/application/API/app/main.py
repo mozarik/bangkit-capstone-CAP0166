@@ -33,6 +33,8 @@ predict = Predict(
 
 
 # Dependency
+
+
 def get_db():
     db = SessionLocal()
     try:
@@ -73,7 +75,8 @@ async def create_upload_file(background_tasks: BackgroundTasks, file: UploadFile
     create_preprocess(db=db, preprocess=model)
 
     # using background task
-    background_tasks.add_task(extract_face_url, blob.public_url, file.content_type, db)
+    background_tasks.add_task(
+        extract_face_url, blob.public_url, file.content_type, db)
 
     # file_numpy = extract.read_image(image=blob.public_url)
     # content2 = numpyarray_to_blob(file_numpy)
@@ -97,30 +100,33 @@ def extract_face_url(url: str, content_type, db: Session):
 
     extract = Extract()
     image_of_faces = extract.image_from_url(url)
+
     list_of_faces = extract.extract_face_to_list(image_of_faces)
     logging.debug(len(list_of_faces))
     # tambah fungsi predict for i in list_of_faces
     # list of dict
     list_data = []
-    for i in list_of_faces:
-        data = predict.predict_face(i)
+    for face in list_of_faces:
+        data = predict.predict_face(face)
         list_data.append(data[0])
         logging.debug(data)
 
     list_url_face = []
-    for i in list_of_faces:
-        content_face = numpyarray_to_blob(i)
-        name_face = str(time.time())
-        result_face = hashlib.md5(name_face.encode('utf-8')).hexdigest()
-        blob_face = bucket.blob(str(result_face))
-        blob_face.upload_from_string(
-            content_face,
-            content_type=content_type
-        )
-        blob_face.make_public()
-        list_url_face.append(blob_face.public_url)
+    for face in list_of_faces:
+        # name_face = str(time.time())
+        # result_face = hashlib.md5(name_face.encode('utf-8')).hexdigest()
+        # blob_face = bucket.blob(str(result_face))
+        # blob_face.upload_from_string(
+        #     content_face,
+        #     content_type=content_type
+        # )
+        # blob_face.make_public()
 
-    data = db.query(models.Preprocess).filter(models.Preprocess.img_url == url).first()
+        blob_face_public_url = UploadFaceToBucket(face, content_type)
+        list_url_face.append(blob_face_public_url)
+
+    data = db.query(models.Preprocess).filter(
+        models.Preprocess.img_url == url).first()
     id = data.id
     logging.debug(data)
 
@@ -132,6 +138,22 @@ def extract_face_url(url: str, content_type, db: Session):
             parent_id=id
         )
         create_postprocess(db=db, postprocess=model)
+
+
+def UploadFaceToBucket(face, content_type):
+    gcs = storage.Client()
+    bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET)
+
+    content_face = numpyarray_to_blob(face)
+    name_face = str(time.time())
+    result_face = hashlib.md5(name_face.encode('utf-8')).hexdigest()
+    blob_face = bucket.blob(str(result_face))
+    blob_face.upload_from_string(
+        content_face,
+        content_type=content_type
+    )
+
+    return blob_face.public_url
 
 
 @app.post("/add-preprocess/", response_model=schemas.Preprocess)
