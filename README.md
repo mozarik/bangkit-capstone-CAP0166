@@ -26,7 +26,7 @@ All of the project management will take place on Github using the project board.
 
 **TBD**
 
-## Local Deployment
+## Local Deployment Machine Learning Jupyter Notebook
 
 **TBD**
 
