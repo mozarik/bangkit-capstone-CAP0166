@@ -66,7 +66,7 @@ async def create_upload_file(background_tasks: BackgroundTasks, file: UploadFile
     content = await file.read()
     blob.upload_from_string(
         content,
-        content_type=file.content_type
+        content_type="image/jpeg"
     )
     blob.make_public()
 
