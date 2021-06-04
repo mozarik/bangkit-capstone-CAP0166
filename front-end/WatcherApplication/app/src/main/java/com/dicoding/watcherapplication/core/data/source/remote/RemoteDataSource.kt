@@ -29,7 +29,6 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
-
     //upload
     suspend fun uploadPhoto(postRequest: PostRequest) {
         apiService.postPhoto(postRequest)

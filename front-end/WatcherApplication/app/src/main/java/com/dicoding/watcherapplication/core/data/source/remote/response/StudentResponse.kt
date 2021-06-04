@@ -6,6 +6,9 @@ data class StudentResponse (
     @field:SerializedName("name")
     val name: String,
 
-    @field:SerializedName("img")
+    @field:SerializedName("percentage")
+    val percentage: String,
+
+    @field:SerializedName("url_image_face")
     val img: String
 )

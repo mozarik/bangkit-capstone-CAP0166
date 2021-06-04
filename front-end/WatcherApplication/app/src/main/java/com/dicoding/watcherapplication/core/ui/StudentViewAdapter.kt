@@ -28,8 +28,8 @@ class StudentViewAdapter : RecyclerView.Adapter<StudentViewAdapter.ListViewAdapt
                 Glide.with(itemView.context)
                     .load(data.image)
                     .into(imageStudent)
-
                 textStudentName.text = data.name
+                textStudentStatusPercentage.text = data.percentage
             }
         }
     }

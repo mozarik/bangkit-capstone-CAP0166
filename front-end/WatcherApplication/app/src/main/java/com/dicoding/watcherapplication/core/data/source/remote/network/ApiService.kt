@@ -13,7 +13,7 @@ interface ApiService {
     //student
     @GET("student_mock")
     suspend fun getList():ListStudentResponse
-
+  
     //upload (haven't tested) maybe need suspend like getList()?
     @Headers("Content-Type: application/json")
     @POST("uploadfile/")

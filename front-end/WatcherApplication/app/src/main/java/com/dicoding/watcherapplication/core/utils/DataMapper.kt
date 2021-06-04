@@ -10,7 +10,9 @@ object DataMapper {
         input.map {
             val student = StudentEntity(
                 name = it.name,
-                image = it.img
+
+                image = it.img,
+                percentage = it.percentage
             )
             studentList.add(student)
         }
@@ -21,12 +23,14 @@ object DataMapper {
         input.map {
             Student(
                 name = it.name,
+                percentage = it.percentage,
                 image = it.image
             )
         }
 
     fun mapDomainToEntityStudent(input: Student) = StudentEntity(
         name = input.name,
+        percentage = input.percentage,
         image = input.image
     )
 }
