@@ -95,9 +95,6 @@ async def create_upload_file(background_tasks: BackgroundTasks, file: UploadFile
 
 def extract_face_url(url: str, content_type, db: Session):
     logging.basicConfig(level=logging.DEBUG)
-    gcs = storage.Client()
-    bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET)
-
     extract = Extract()
     image_of_faces = extract.image_from_url(url)
 
@@ -150,7 +147,7 @@ def UploadFaceToBucket(face, content_type):
     blob_face = bucket.blob(str(result_face))
     blob_face.upload_from_string(
         content_face,
-        content_type=content_type
+        content_type="image/jpeg"
     )
 
     return blob_face.public_url
