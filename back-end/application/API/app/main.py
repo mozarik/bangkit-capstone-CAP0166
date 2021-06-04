@@ -153,6 +153,7 @@ def UploadFaceToBucket(face, content_type):
         content_face,
         content_type="image/jpeg"
     )
+    blob_face.make_public()
 
     return blob_face.public_url
 
