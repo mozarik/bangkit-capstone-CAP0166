@@ -28,3 +28,7 @@ def create_postprocess(db: Session, postprocess: schemas.PostprocessCreate):
     db.commit()
     db.refresh(db_preprocess)
     return db_preprocess
+
+
+def get_postprocess_all(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Postprocess).offset(skip).limit(limit).all()

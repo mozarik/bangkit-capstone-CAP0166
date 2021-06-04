@@ -1,7 +1,7 @@
 import hashlib
 import os
 import time
-
+from typing import List
 from fastapi import FastAPI, Depends, UploadFile, File, HTTPException, BackgroundTasks
 from google.cloud import storage
 
@@ -91,7 +91,6 @@ async def create_upload_file(background_tasks: BackgroundTasks, file: UploadFile
     # )
     # blob2.make_public()
 
-
     # get id
     id_img = crud.get_preprocess_by_img(db=db, img_url=blob.public_url)
     return {"status": 200, "data": id_img}
@@ -169,9 +168,17 @@ def create_postprocess(postprocess: schemas.PostprocessCreate, db: Session = Dep
 
 
 @app.get("/postprocess/{parent_id}")
-def read_postprocess(parent_id: int, db: Session = Depends(get_db)):
+def read_postprocess_by_parent_id(parent_id: int, db: Session = Depends(get_db)):
     db_postprocess = crud.get_postprocess(db, parent_id=parent_id)
 
+    if db_postprocess is None:
+        raise HTTPException(status_code=404, detail="Postprocess not found")
+    return {"status": 200, "data": db_postprocess}
+
+
+@app.get("/postprocess/", response_model=List[schemas.Postprocess])
+def read_postprocess_all(db: Session = Depends(get_db)):
+    db_postprocess = crud.get_postprocess_all(db=db)
     if db_postprocess is None:
         raise HTTPException(status_code=404, detail="Postprocess not found")
     return {"status": 200, "data": db_postprocess}
