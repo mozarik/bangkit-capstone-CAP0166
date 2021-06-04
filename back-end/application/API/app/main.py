@@ -176,7 +176,7 @@ def read_postprocess_by_parent_id(parent_id: int, db: Session = Depends(get_db))
     return {"status": 200, "data": db_postprocess}
 
 
-@app.get("/postprocess/", response_model=List[schemas.Postprocess])
+@app.get("/postprocess/")
 def read_postprocess_all(db: Session = Depends(get_db)):
     db_postprocess = crud.get_postprocess_all(db=db)
     if db_postprocess is None:
