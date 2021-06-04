@@ -1,13 +1,8 @@
 from decimal import Decimal
 
-from flask import Flask, flash, request, redirect, url_for, render_template, jsonify
-from flask_mysqldb import MySQL, MySQLdb
-from werkzeug.utils import secure_filename
-import urllib.request
-import os
+from flask import Flask, request, render_template, jsonify
 import requests
-from werkzeug.utils import secure_filename
-from datetime import datetime
+
 import json
 
 app = Flask(__name__)
