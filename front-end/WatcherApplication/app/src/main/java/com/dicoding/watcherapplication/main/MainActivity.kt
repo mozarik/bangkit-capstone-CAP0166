@@ -20,17 +20,22 @@ import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.dicoding.watcherapplication.BuildConfig
-import com.dicoding.watcherapplication.core.data.upload.Api
-import com.dicoding.watcherapplication.core.data.upload.UploadResponse
+import com.dicoding.watcherapplication.core.data.upload.ApiInterface
 import com.dicoding.watcherapplication.databinding.ActivityMainBinding
 import com.dicoding.watcherapplication.phone.PhoneActivity
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import retrofit.Callback
-import retrofit.RetrofitError
-import retrofit.client.Response
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -224,24 +229,60 @@ class MainActivity : AppCompatActivity() {
             mProgress.setMessage("Sedang upload foto")
             mProgress.show()
 
-            val baseImg: String = Base64.encodeToString(imageBytes, Base64.DEFAULT)
-            Api.client.upload(
-                100,
-                baseImg, object : Callback<UploadResponse?> {
-                    override fun success(signUpResponse: UploadResponse?, response: Response?){
-                        mProgress.dismiss()
-                        Toast.makeText(this@MainActivity, "sukses upload", Toast.LENGTH_LONG).show()
+            //================
+            //https://api-watcher-n762eur5da-et.a.run.app
+            //https://ptsv2.com
+            val retrofit: Retrofit = Retrofit.Builder()
+                .baseUrl("https://api-watcher-n762eur5da-et.a.run.app")
+                .build()
+
+            val service: ApiInterface = retrofit.create(ApiInterface::class.java)
+            val file = File(cameraFilePath)
+            val requestFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+            val body: MultipartBody.Part = MultipartBody.Part.createFormData("file", file.name, requestFile)
+            val call: Call<ResponseBody> = service.upload(body)
+
+            call.enqueue(object : Callback<ResponseBody>{
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    mProgress.dismiss()
+                    Toast.makeText(this@MainActivity, "sukses upload", Toast.LENGTH_LONG).show()
+                    try {
+                        val jsonStringResult: String? = response.body()?.string()
+                        println("code 201: response: "+ jsonStringResult)
+                        val jsonObject = JSONObject(jsonStringResult)
+                        val status = jsonObject.getString("status")
+                        val data = jsonObject.getString("data")
+                        println("code 202: response status: " + status)
+                        println("code 203: response data: " + data)
+                    } catch (e: Exception){
+                        e.printStackTrace()
                     }
 
-                    override fun failure(error: RetrofitError){
-                        Toast.makeText(this@MainActivity, error.toString(), Toast.LENGTH_LONG).show()
-                        mProgress.dismiss()
-                    }
-                })
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    mProgress.dismiss()
+                    Toast.makeText(this@MainActivity, t.toString(), Toast.LENGTH_LONG).show()
+                }
+
+            })
+
+
+            //================
+
+
         }
 
     }
 
 
+    fun showFilePath(){
+        Toast.makeText(this, "File Path: "+cameraFilePath.toString(), Toast.LENGTH_LONG).show()
+    }
+
+    fun showImageArrayInString(){
+        val baseImg: String = Base64.encodeToString(imageBytes, Base64.DEFAULT)
+        Toast.makeText(this, "Image byte: "+ baseImg, Toast.LENGTH_LONG).show()
+    }
 
 }
