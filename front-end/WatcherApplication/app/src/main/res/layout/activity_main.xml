@@ -17,55 +17,55 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <LinearLayout
-        android:id="@+id/layout_button_field"
+    <Button
+        android:id="@+id/button_choose_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/button_upload"
+        app:layout_constraintTop_toBottomOf="@id/image_upload"
+        android:layout_marginTop="20dp"
+
+        android:textStyle="bold"
+        android:text="@string/button_choose_image"/>
+
+    <Button
+        android:id="@+id/button_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/button_choose_image"
+        app:layout_constraintTop_toBottomOf="@id/image_upload"
+        android:layout_marginTop="20dp"
+
+        android:textStyle="bold"
+        android:text="@string/button_upload"/>
+
+<!--    <ProgressBar-->
+<!--        android:id="@+id/progress_bar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+
+<!--        style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
+<!--        android:max="100"-->
+<!--        android:progress="40"-->
+
+<!--        app:layout_constraintTop_toBottomOf="@id/button_upload"-->
+<!--        android:layout_marginTop="10dp"/>-->
+
+    <Button
+        android:id="@+id/button_check_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
+        android:textStyle="bold"
+        android:text="@string/button_check_result"
 
-        app:layout_constraintTop_toBottomOf="@id/image_upload">
+        app:layout_constraintTop_toBottomOf="@id/button_choose_image"
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/button_choose_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
 
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/button_upload"
-                tools:ignore="MissingConstraints"
-
-                android:textStyle="bold"
-                android:text="@string/button_choose_image"
-                 />
-
-            <Button
-                android:id="@+id/button_upload"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/button_choose_image"
-                tools:ignore="MissingConstraints"
-
-                android:textStyle="bold"
-                android:text="@string/button_upload"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <Button
-            android:id="@+id/button_check_result"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/button_check_result"/>
-
-    </LinearLayout>
-
-
-
-
+<!--    app:layout_constraintTop_toBottomOf="@id/progress_bar"-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

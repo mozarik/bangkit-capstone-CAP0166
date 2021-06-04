@@ -7,5 +7,4 @@ import kotlinx.coroutines.flow.Flow
 
 class WatcherInteractor(private val watcherRepository: IWatcherRepository): WatcherUseCase {
     override fun getAllStudent() = watcherRepository.getAllStudent()
-
 }
