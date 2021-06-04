@@ -94,7 +94,7 @@ async def create_upload_file(background_tasks: BackgroundTasks, file: UploadFile
 
     # get id
     id_img = crud.get_preprocess_by_img(db=db, img_url=blob.public_url)
-    return {"status": 200, "id": id_img, "data": blob.public_url}
+    return {"status": 200, "data": id_img}
 
 
 def extract_face_url(url: str, content_type, db: Session):
