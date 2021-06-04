@@ -18,7 +18,7 @@ All of the project management will take place on Github using the project board.
 |    Antoni Kurniawan   |  A0050366  |      Android     |
 
 ## What Are We Doing In This Project
-**TBD**
+We make automatic students presence by using both Face detection and Face recognition to identify a person based on their faces
 
 
 
