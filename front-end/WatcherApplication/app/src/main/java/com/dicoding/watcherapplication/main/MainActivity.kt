@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
     val REQUEST_PICK_PHOTO = 2
     var cameraFilePath: String? = null
     var imageBytes: ByteArray? = null
-
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         binding.buttonUpload.setOnClickListener {
             upload()
 //            Toast.makeText(this, "Button Upload is Unfinished, please for the next update...", Toast.LENGTH_SHORT).show()
-
         }
 
         binding.buttonChooseImage.setOnClickListener {
@@ -155,7 +153,6 @@ class MainActivity : AppCompatActivity() {
 
                 }).check()
     }
-
     protected fun uploadImage() {
         Dexter.withActivity(this)
                 .withPermissions(
@@ -257,25 +254,15 @@ class MainActivity : AppCompatActivity() {
                     } catch (e: Exception){
                         e.printStackTrace()
                     }
-
                 }
-
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     mProgress.dismiss()
                     Toast.makeText(this@MainActivity, t.toString(), Toast.LENGTH_LONG).show()
                 }
-
             })
-
-
             //================
-
-
         }
-
     }
-
-
     fun showFilePath(){
         Toast.makeText(this, "File Path: "+cameraFilePath.toString(), Toast.LENGTH_LONG).show()
     }
@@ -284,5 +271,4 @@ class MainActivity : AppCompatActivity() {
         val baseImg: String = Base64.encodeToString(imageBytes, Base64.DEFAULT)
         Toast.makeText(this, "Image byte: "+ baseImg, Toast.LENGTH_LONG).show()
     }
-
 }

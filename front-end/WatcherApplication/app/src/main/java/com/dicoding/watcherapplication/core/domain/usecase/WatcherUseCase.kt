@@ -7,5 +7,4 @@ import kotlinx.coroutines.flow.Flow
 
 interface WatcherUseCase {
     fun getAllStudent(): Flow<Resource<List<Student>>>
-
 }

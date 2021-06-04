@@ -6,5 +6,4 @@ import kotlinx.coroutines.flow.Flow
 
 interface IWatcherRepository {
     fun getAllStudent(): Flow<Resource<List<Student>>>
-
 }

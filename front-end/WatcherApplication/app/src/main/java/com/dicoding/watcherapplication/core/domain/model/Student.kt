@@ -1,8 +1,9 @@
 package com.dicoding.watcherapplication.core.domain.model
 
 import android.os.Parcelable
+develop
 import kotlinx.parcelize.Parcelize
-
+// import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Student (

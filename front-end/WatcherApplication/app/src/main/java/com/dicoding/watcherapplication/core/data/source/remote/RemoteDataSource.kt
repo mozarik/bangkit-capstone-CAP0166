@@ -3,6 +3,7 @@ package com.dicoding.watcherapplication.core.data.source.remote
 import android.util.Log
 import com.dicoding.watcherapplication.core.data.source.remote.network.ApiResponse
 import com.dicoding.watcherapplication.core.data.source.remote.network.ApiService
+import com.dicoding.watcherapplication.core.data.source.remote.response.PostRequest
 import com.dicoding.watcherapplication.core.data.source.remote.response.StudentResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -28,5 +29,8 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
-
+    //upload
+    suspend fun uploadPhoto(postRequest: PostRequest) {
+        apiService.postPhoto(postRequest)
+    }
 }

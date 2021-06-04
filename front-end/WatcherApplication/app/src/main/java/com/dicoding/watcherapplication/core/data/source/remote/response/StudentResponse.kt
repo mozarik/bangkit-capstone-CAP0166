@@ -11,6 +11,4 @@ data class StudentResponse (
 
     @field:SerializedName("url_image_face")
     val img: String
-
-
 )

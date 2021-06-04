@@ -11,6 +11,7 @@ data class StudentEntity (
     var name: String,
 
     @ColumnInfo(name = "image")
+
     var image: String,
 
     @ColumnInfo(name = "percentage")

@@ -10,6 +10,7 @@ object DataMapper {
         input.map {
             val student = StudentEntity(
                 name = it.name,
+
                 image = it.img,
                 percentage = it.percentage
             )

@@ -1,5 +1,7 @@
 package com.dicoding.watcherapplication.phone
 
+
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -7,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.watcherapplication.R
 import com.dicoding.watcherapplication.core.data.Resource
 import com.dicoding.watcherapplication.core.ui.StudentViewAdapter
+import com.dicoding.watcherapplication.core.utils.DataDummy
 import com.dicoding.watcherapplication.databinding.ActivityPhoneBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
