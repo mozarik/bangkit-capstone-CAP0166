@@ -1,4 +1,4 @@
-
+![Logo](https://raw.githubusercontent.com/mozarik/bangkit-capstone-CAP0166/main/.github/images/the-watcher.png)
 # Bangkit 2021 Capstone Team : CAP0166
 
 Hi. this is our repository for our project. Our team consist of 2 people from each Bangkit Path which is consist of Machine Learning, Android, and Cloud Computing.
