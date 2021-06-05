@@ -8,7 +8,7 @@ import os
 from werkzeug.utils import secure_filename
 from datetime import datetime
 
-app = Flask(__name__, static_url_path="/static")
+app = Flask(__name__)
 
 app.secret_key = "caircocoders-ednalan"
 #
