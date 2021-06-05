@@ -1,15 +1,14 @@
 from decimal import Decimal
 
 import requests
-from flask import Flask, flash, request, redirect, url_for, render_template, jsonify
-from flask_mysqldb import MySQL,MySQLdb
+from flask import Flask, flash, request, redirect, url_for, render_template, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 import urllib.request
 import os
 from werkzeug.utils import secure_filename
 from datetime import datetime
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="/static")
 
 app.secret_key = "caircocoders-ednalan"
 #
@@ -27,6 +26,12 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/js/<path:path>')
+def send_js(path):
+    root_dir = os.path.dirname(os.getcwd())
+    return send_from_directory(os.path.join(root_dir, 'static', 'js'), path)
 
 
 @app.route("/")
@@ -50,7 +55,7 @@ def index2():
     r = requests.get(url)
     data = r.json()["data"]
     for i in data:
-        i['percentage'] = str(round((1 - Decimal(i['percentage'])) *100)) + "%"
+        i['percentage'] = str(round((1 - Decimal(i['percentage'])) * 100)) + "%"
     return render_template('showdata.html', menu='dashboard', submenu='show', data=data)
 
 
