@@ -23,11 +23,9 @@ We make automatic students presence by using both Face detection and Face recogn
 
 
 
-## Tech Stack And Workflow
+## Tech Stack
 
-### Tech Stack
-- Python
-- 
+![tech-stack](https://raw.githubusercontent.com/mozarik/bangkit-capstone-CAP0166/main/.github/images/tech-stack.jpeg)
 
 ## Local Deployment Machine Learning Jupyter Notebook
 Make sure you intalled this dependency first on your local machine. You can use `virtual-env` or conda virtual env for making things easier
