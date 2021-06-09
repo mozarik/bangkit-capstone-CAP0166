@@ -1,0 +1,177 @@
+{%include 'header.html' %}
+
+ <!-- Content Wrapper. Contains page content -->
+ <div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Upload File</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Menu</a></li>
+            <li class="breadcrumb-item active">Upload File</li>
+          </ol>
+        </div><!-- /.col -->
+      </div>
+    </div>
+  </div>
+  <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Quick Example</h3>
+              </div>
+              <form>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputFile">File Image</label>
+                    <div class="input-group">
+                         
+              </form>
+            </div>
+            <!-- /.card -->
+            <div class="panel panel-default">
+              <div class="panel-heading">
+              </div>
+              
+              <div class="panel-body">
+                <form id="uploadImage" action="/upload" method="post">
+                  <div class="form-group">
+                    <input
+                      type="file"
+                      name="uploadFile"
+                      id="uploadFile"
+                      accept=".jpg, .png"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="submit"
+                      id="uploadSubmit"
+                      value="Upload"
+                      class="btn btn-info"
+                    />
+                  </div>
+                  <div class="progress">
+                    <div
+                      class="progress-bar progress-bar-striped bg-success"
+                      role="progressbar"
+                      aria-valuenow="0"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                  <div id="targetLayer" style="display: none"></div>
+                </form>
+                <div id="loader-icon" style="display: none">
+                  <img src="/static/images/loader.gif" />
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  
+  {%include 'footer.html' %}
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href=""/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"
+      integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn"
+      crossorigin="anonymous"
+    ></script>
+    <!--<script src="/static/js/jquery.form.js"></script>-->
+  </head>
+  <body>
+    <div class="container">
+      <br />
+      <h3 align="center"></h3>
+      <br />
+
+      
+    </div>
+
+    <footer class="main-footer">
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.1.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+  
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+    <script>
+      $(document).ready(function () {
+        $("#uploadImage").submit(function (event) {
+          if ($("#uploadFile").val()) {
+            event.preventDefault();
+            $("#loader-icon").show();
+            $("#targetLayer").hide();
+            $(this).ajaxSubmit({
+              target: "#targetLayer",
+              beforeSubmit: function () {
+                $(".progress-bar").width("50%");
+              },
+              uploadProgress: function (
+                event,
+                position,
+                total,
+                percentageComplete
+              ) {
+                $(".progress-bar").animate(
+                  {
+                    width: percentageComplete + "%",
+                  },
+                  {
+                    duration: 1000,
+                  }
+                );
+              },
+              success: function (data) {
+                $("#loader-icon").hide();
+                $("#targetLayer").show();
+                $("#targetLayer").append(data.htmlresponse);
+              },
+              resetForm: true,
+            });
+          }
+          return false;
+        });
+      });
+    </script>
+  </body>
+</html>

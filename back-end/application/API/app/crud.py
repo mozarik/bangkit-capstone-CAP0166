@@ -12,6 +12,10 @@ def create_preprocess(db: Session, preprocess: schemas.PreprocessCreate):
     return db_preprocess
 
 
+def get_preprocess_by_img(db: Session, img_url: str):
+    return db.query(models.Preprocess).filter(models.Preprocess.img_url == img_url).first()
+
+
 def get_postprocess(db: Session, parent_id: int):
     return db.query(models.Postprocess).filter(models.Postprocess.parent_id == parent_id).all()
 
@@ -24,3 +28,7 @@ def create_postprocess(db: Session, postprocess: schemas.PostprocessCreate):
     db.commit()
     db.refresh(db_preprocess)
     return db_preprocess
+
+
+def get_postprocess_all(db: Session):
+    return db.query(models.Postprocess).all()

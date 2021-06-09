@@ -30,15 +30,17 @@
                   <tr>
                     <th style="width: 10px">No.</th>
                     <th>Image</th>
-                    <th>File Name</th>
+                    <th>Name</th>
+                    <th>Percentage</th>
                   </tr>
                 </thead>
                 <tbody>
                   {% for rs in data %}
                   <tr>
                     <td>{{loop.index}}</td>
-                    <td>{{rs.1}}</td>
-                    <td>{{rs.2}}</td>
+                    <td><img src="{{ rs['img_url'] }}" class="img-thumbnail" width="150" height="150" /></td>
+                    <td>{{rs["name"]}}</td>
+                    <td>{{rs["percentage"]}}</td>
                   </tr>
                   {% endfor %}
                 </tbody>

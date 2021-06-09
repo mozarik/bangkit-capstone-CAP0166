@@ -1,4 +1,4 @@
-
+![Logo](https://raw.githubusercontent.com/mozarik/bangkit-capstone-CAP0166/main/.github/images/the-watcher.png)
 # Bangkit 2021 Capstone Team : CAP0166
 
 Hi. this is our repository for our project. Our team consist of 2 people from each Bangkit Path which is consist of Machine Learning, Android, and Cloud Computing.
@@ -18,16 +18,14 @@ All of the project management will take place on Github using the project board.
 |    Antoni Kurniawan   |  A0050366  |      Android     |
 
 ## What Are We Doing In This Project
-**TBD**
+We make automatic students presence by using both Face detection and Face recognition to identify a person based on their faces
 
 
 
 
-## Tech Stack And Workflow
+## Tech Stack
 
-### Tech Stack
-- Python
-- 
+![tech-stack](https://raw.githubusercontent.com/mozarik/bangkit-capstone-CAP0166/main/.github/images/tech-stack.jpeg)
 
 ## Local Deployment Machine Learning Jupyter Notebook
 Make sure you intalled this dependency first on your local machine. You can use `virtual-env` or conda virtual env for making things easier
