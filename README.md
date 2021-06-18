@@ -83,6 +83,7 @@ For example see `playground_example_zein.ipynb` to run the inference.
 
 
 
-## Project Update
+## Project Demo
 
-**TBD** 
+See this video on youtube [Video](https://youtu.be/ztPqSSeRf-Q)
+
